@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>SkyJet Express | Flight Search & Exclusive Deals</title>
+  <title>SkyJet Express | Live Flight Search & Exclusive Deals</title>
   <!-- Google Fonts & simple reset -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <style>
@@ -21,7 +21,6 @@
       scroll-behavior: smooth;
     }
 
-    /* container utility */
     .container {
       max-width: 1280px;
       margin: 0 auto;
@@ -113,7 +112,7 @@
       font-size: 0.9rem;
     }
 
-    /* HERO + FLIGHT SEARCH SECTION (after menu header) */
+    /* HERO + FLIGHT SEARCH SECTION */
     .hero-search {
       background: linear-gradient(107deg, #eef2ff 0%, #ffffff 100%);
       padding: 48px 0 56px;
@@ -182,16 +181,17 @@
       background: #b11f1f;
       transform: scale(0.97);
     }
+    .search-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      transform: none;
+    }
     .demo-results {
       margin-top: 28px;
       background: #f8fafc;
       border-radius: 28px;
       padding: 18px 24px;
       border-left: 4px solid #d62828;
-      display: none;
-    }
-    .demo-results.active {
-      display: block;
     }
     .flight-result-item {
       display: flex;
@@ -213,17 +213,35 @@
       border-radius: 24px;
       color: #2c3e66;
     }
-
-    /* rest of the page (similar style to original) */
-    .phone-cta-banner {
-      background: #0f2b3d;
-      color: white;
+    .loading-spinner {
       text-align: center;
-      padding: 24px;
-      margin: 40px 20px 20px;
-      border-radius: 48px;
+      padding: 32px;
+      color: #1e3c72;
+      font-weight: 600;
     }
-    .features-grid, .steps-grid, .deals-grid, .testimonials {
+    .api-warning {
+      background: #fff3e0;
+      padding: 12px;
+      border-radius: 20px;
+      margin-top: 16px;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #d62828;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* rest of page styles */
+    .phone-cta-banner, .features-grid, .steps-grid, .deals-grid, .testimonials {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 32px;
@@ -234,61 +252,31 @@
       padding: 24px;
       border-radius: 28px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.02);
-      transition: 0.2s;
       border: 1px solid #edf2f7;
     }
-    .feature-icon {
-      font-size: 2.5rem;
-      margin-bottom: 16px;
-    }
-    .price-badge {
-      font-weight: 800;
-      font-size: 1.8rem;
-      color: #d62828;
-    }
-    .btn-phone {
-      background: #ffcd38;
-      color: #0a2f44;
-      font-weight: 800;
-      padding: 14px 28px;
-      border-radius: 60px;
-      text-decoration: none;
-      display: inline-block;
-    }
-    footer {
-      background: #0f172a;
-      color: #cbd5e1;
-      padding: 32px 0;
-      margin-top: 56px;
-      text-align: center;
-    }
+    .feature-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .price-badge { font-weight: 800; font-size: 1.8rem; color: #d62828; }
+    .btn-phone { background: #ffcd38; color: #0a2f44; font-weight: 800; padding: 14px 28px; border-radius: 60px; text-decoration: none; display: inline-block; }
+    footer { background: #0f172a; color: #cbd5e1; padding: 32px 0; margin-top: 56px; text-align: center; }
     @media (max-width: 760px) {
-      .flight-search-form {
-        flex-direction: column;
-      }
-      .search-btn {
-        width: 100%;
-      }
-      .nav-container {
-        flex-direction: column;
-      }
+      .flight-search-form { flex-direction: column; }
+      .search-btn { width: 100%; }
+      .nav-container { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <!-- Top urgency (inspired by reference) -->
   <div class="top-bar">
     ✈️ LIMITED TIME: Call now for unpublished fares — agents standing by!
     <span>🔥 EXCLUSIVE PHONE-ONLY FARES</span>
   </div>
 
-  <!-- Menu Header -->
   <header class="site-header">
     <div class="container">
       <div class="nav-container">
         <div class="logo">
           <h1>✈️ SkyJet Express</h1>
-          <p>unpublished fares • 24/7 experts</p>
+          <p>live search • unpublished fares • 24/7 experts</p>
         </div>
         <div class="menu-links">
           <a href="#">Deals</a>
@@ -300,25 +288,25 @@
     </div>
   </header>
 
-  <!-- FLIGHT SEARCH SECTION (after menu header) -->
+  <!-- FLIGHT SEARCH SECTION WITH FREE GOOGLE FLIGHTS API (SerpAPI demo) -->
   <section class="hero-search">
     <div class="container">
       <div class="search-card">
         <div class="flight-search-title">
-          🔍 Search flights — best rates guaranteed
+          🔍 Live flight search — Google Flights powered
         </div>
         <form id="flightSearchForm" class="flight-search-form">
           <div class="input-group">
-            <label>✈️ From</label>
-            <input type="text" id="origin" placeholder="New York (JFK)" value="New York">
+            <label>✈️ From (Airport/City)</label>
+            <input type="text" id="origin" placeholder="JFK, New York" value="New York" required>
           </div>
           <div class="input-group">
-            <label>📍 To</label>
-            <input type="text" id="destination" placeholder="Los Angeles (LAX)" value="Miami">
+            <label>📍 To (Airport/City)</label>
+            <input type="text" id="destination" placeholder="LAX, Los Angeles" value="Miami" required>
           </div>
           <div class="input-group">
-            <label>📅 Departure</label>
-            <input type="date" id="departDate" value="2026-05-15">
+            <label>📅 Departure Date</label>
+            <input type="date" id="departDate" value="2026-06-10">
           </div>
           <div class="input-group">
             <label>🔄 Return (optional)</label>
@@ -327,46 +315,45 @@
           <div class="input-group">
             <label>👥 Passengers</label>
             <select id="passengers">
-              <option>1 Adult</option>
-              <option>2 Adults</option>
-              <option>3 Adults</option>
-              <option>4 Adults</option>
+              <option>1 adult</option>
+              <option>2 adults</option>
+              <option>3 adults</option>
+              <option>4 adults</option>
             </select>
           </div>
-          <button type="submit" class="search-btn">✈️ Search Flights</button>
+          <button type="submit" class="search-btn" id="searchButton">✈️ Search Live Flights</button>
         </form>
-        <!-- dynamic search results panel -->
+        
+        <!-- Live API Results Panel -->
         <div id="searchResultsPanel" class="demo-results">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <strong>✈️ Live exclusive phone-rate matches</strong>
-            <span class="book-hint">📞 Call to book these exact fares</span>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap;">
+            <strong>✈️ Live Google Flights results</strong>
+            <span class="book-hint">📞 Call to book these fares +1-505-633-1090</span>
           </div>
-          <div id="resultsList"></div>
-          <div style="margin-top: 16px; text-align: center; font-size: 0.85rem; color: #2c5f8a;">
-            ⚡ Showing sample unpublished rates — call +1-505-633-1090 to secure.
+          <div id="resultsList">
+            <div style="text-align:center; padding:20px;">✨ Enter your route and click search to see live flight deals from Google Flights API.</div>
+          </div>
+          <div id="apiNote" class="api-warning" style="margin-top:16px;">
+            🔍 Using free SerpAPI demo (limited to 100 queries/month). For full access, get your API key at <a href="https://serpapi.com" target="_blank">serpapi.com</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- rest of the landing page (inspired by the original) -->
   <div class="container">
-    <!-- phone only banner -->
-    <div class="phone-cta-banner">
+    <div class="phone-cta-banner" style="background:#0f2b3d; color:white; text-align:center; padding:24px; border-radius:48px; margin:40px 0;">
       <h2>🔥 Don't book online — you'll overpay!</h2>
-      <p style="margin: 12px 0;">Exclusive consolidator rates not sold on any website. Our agents beat any online price.</p>
-      <a href="tel:+15056331090" style="background: white; color:#0f2b3d; padding:12px 28px; border-radius: 40px; font-weight:800; text-decoration:none; display:inline-block;">📞 CALL NOW → +1-505-633-1090</a>
-      <div style="margin-top: 16px;">✨ 12 agents available now • Free quote • No obligation</div>
+      <p style="margin:12px 0;">Exclusive consolidator rates not sold on any website. Our agents beat any online price.</p>
+      <a href="tel:+15056331090" style="background:white; color:#0f2b3d; padding:12px 28px; border-radius:40px; font-weight:800; text-decoration:none;">📞 CALL NOW → +1-505-633-1090</a>
+      <div style="margin-top:16px;">✨ 12 agents available now • Free quote • No obligation</div>
     </div>
 
-    <!-- airline logos banner -->
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; margin: 32px 0; font-weight: 700; color: #334155;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; margin: 32px 0; font-weight: 700;">
       <span>✈️ DELTA</span> <span>✈️ UNITED</span> <span>✈️ AMERICAN</span> <span>✈️ SOUTHWEST</span> <span>✈️ JETBLUE</span> <span>✈️ SPIRIT</span> <span>✈️ FRONTIER</span>
     </div>
 
-    <!-- why call experts -->
-    <h2 style="font-size: 2rem; margin: 40px 0 20px; text-align: center;">Why call our travel experts?</h2>
+    <h2 style="font-size:2rem; margin:40px 0 20px; text-align:center;">Why call our travel experts?</h2>
     <div class="features-grid">
       <div class="card"><div class="feature-icon">📞</div><h3>Unpublished Fares</h3><p>Access exclusive airline deals & consolidator rates not available online.</p></div>
       <div class="card"><div class="feature-icon">🕒</div><h3>24/7 Availability</h3><p>Our travel experts are available around the clock, every day.</p></div>
@@ -376,160 +363,257 @@
       <div class="card"><div class="feature-icon">🌍</div><h3>All Destinations</h3><p>Domestic & international, every route worldwide.</p></div>
     </div>
 
-    <!-- steps -->
-    <h2 style="font-size: 2rem; margin: 20px 0; text-align: center;">Book in 3 Easy Steps</h2>
+    <h2 style="font-size:2rem; text-align:center;">Book in 3 Easy Steps</h2>
     <div class="steps-grid">
       <div class="card"><span style="font-size:2rem;">1</span><h3>📞 Call Us</h3><p>Dial +1-505-633-1090 & connect instantly.</p></div>
       <div class="card"><span style="font-size:2rem;">2</span><h3>🗺️ Tell Plans</h3><p>Share destination, dates. We search 500+ airlines.</p></div>
       <div class="card"><span style="font-size:2rem;">3</span><h3>💳 Save & Fly</h3><p>Book securely, get e-ticket instantly.</p></div>
     </div>
 
-    <!-- Today's best flight deals (phone-only) -->
-    <h2 style="font-size: 2rem; margin: 40px 0 20px;">🔥 Today's Best Flight Deals</h2>
+    <h2 style="font-size:2rem; margin:40px 0 20px;">🔥 Today's Best Flight Deals</h2>
     <div class="deals-grid">
       <div class="card"><span class="hot-badge" style="background:#d62828; color:white;">HOT DEAL</span><h3>New York ✈️ Miami</h3><p>Round trip • Economy • Non-stop</p><div class="price-badge">$119*</div><small>Phone exclusive</small></div>
       <div class="card"><span class="hot-badge" style="background:#ffb703;">BIG SAVINGS</span><h3>Los Angeles ✈️ London</h3><p>Round trip • Economy • 1 Stop</p><div class="price-badge">$429*</div><small>Phone exclusive</small></div>
       <div class="card"><span class="hot-badge" style="background:#0f7173; color:white;">LIMITED</span><h3>Chicago ✈️ Cancun</h3><p>Round trip • Economy • Non-stop</p><div class="price-badge">$249*</div><small>Phone exclusive</small></div>
     </div>
 
-    <!-- testimonials -->
     <div class="testimonials">
       <div class="card">⭐ “Agent found me a fare to London I couldn’t find anywhere online. Saved a ton!”<br/><strong>— Michael J.</strong> NYC → London</div>
       <div class="card">⭐ “I was on hold for 2 hours with airline. Called SkyJet and booked in 10 minutes at much better rate.”<br/><strong>— Sarah L.</strong> LA → Tokyo</div>
       <div class="card">⭐ “Last-minute emergency, agent worked magic and got us all on same flight. Lifesaver!”<br/><strong>— Robert K.</strong> Dallas → Atlanta</div>
     </div>
 
-    <!-- final CTA -->
-    <div style="background:#0e2a38; border-radius: 48px; padding: 40px 24px; text-align: center; color: white; margin: 40px 0;">
+    <div style="background:#0e2a38; border-radius:48px; padding:40px 24px; text-align:center; color:white; margin:40px 0;">
       <h2>Don't Overpay. Call Now for Exclusive Deals</h2>
-      <p style="margin: 16px 0;">Agents standing by with unpublished fares. Free quote.</p>
-      <a href="tel:+15056331090" style="background:#ffcd38; color:#0e2a38; padding: 14px 34px; border-radius: 60px; text-decoration: none; font-weight: 800; font-size: 1.4rem; display: inline-block;">📞 +1-505-633-1090</a>
-      <p style="margin-top: 18px;">Free call • No obligation • Avg hold: 15 sec</p>
+      <p style="margin:16px 0;">Agents standing by with unpublished fares. Free quote.</p>
+      <a href="tel:+15056331090" style="background:#ffcd38; color:#0e2a38; padding:14px 34px; border-radius:60px; text-decoration:none; font-weight:800; font-size:1.4rem;">📞 +1-505-633-1090</a>
+      <p style="margin-top:18px;">Free call • No obligation • Avg hold: 15 sec</p>
     </div>
 
-    <!-- FAQ simple -->
-    <div style="margin: 48px 0;">
-      <h3 style="font-size: 1.8rem;">Frequently asked questions</h3>
-      <details style="margin-top: 20px;"><summary style="font-weight:700;">How do you find cheaper fares than online?</summary><p>We work directly with airlines and have access to consolidator fares, group rates, and unpublished deals not on public sites.</p></details>
+    <div style="margin:48px 0;">
+      <h3 style="font-size:1.8rem;">Frequently asked questions</h3>
+      <details><summary style="font-weight:700;">How do you find cheaper fares than online?</summary><p>We work directly with airlines and have access to consolidator fares, group rates, and unpublished deals not on public sites.</p></details>
       <details><summary style="font-weight:700;">Is there a fee for calling?</summary><p>No! The call is free, no obligation. A small service fee may apply at booking.</p></details>
       <details><summary style="font-weight:700;">Can I cancel or change my booking?</summary><p>Yes, most bookings can be changed/cancelled per airline policy. We explain fees upfront.</p></details>
       <details><summary style="font-weight:700;">Do you book international flights?</summary><p>Absolutely! Any destination worldwide, including multi-city.</p></details>
-      <details><summary style="font-weight:700;">Are my payment details secure?</summary><p>Yes, PCI-compliant systems. We never store full credit card details.</p></details>
     </div>
   </div>
 
   <footer>
     <div class="container">
       <p>✈️ SkyJet Express — exclusive unpublished airfares. Call 24/7: +1-505-633-1090</p>
-      <p style="margin-top: 12px;">© 2025 • All rights reserved • Prices are sample phone-only offers, subject to availability</p>
+      <p style="margin-top:12px;">© 2025 • Live flight data via SerpAPI Google Flights API (demo integration)</p>
     </div>
   </footer>
 
   <script>
-    // FLIGHT SEARCH LOGIC (dynamic search simulation based on user input)
+    // ============================================================
+    // FREE GOOGLE FLIGHTS API INTEGRATION (SerpAPI)
+    // To use this demo, you need a SerpAPI key (free tier: 100 searches/month)
+    // Replace 'YOUR_SERPAPI_KEY' with your actual key to enable live search.
+    // For demo purposes, we provide a fallback that shows mock data + instructions.
+    // ============================================================
+    
+    // 🔑 SET YOUR FREE API KEY HERE (get from https://serpapi.com)
+    // Free plan gives 100 queries/month — perfect for testing.
+    const SERPAPI_KEY = 'YOUR_SERPAPI_KEY';  // <--- Replace with your actual SerpAPI key
+    
     const searchForm = document.getElementById('flightSearchForm');
-    const resultsPanel = document.getElementById('searchResultsPanel');
     const resultsListDiv = document.getElementById('resultsList');
+    const searchBtn = document.getElementById('searchButton');
 
-    // Sample flight data (simulates phone-only unpublished fares)
-    const flightDatabase = {
-      "new york-miami": { price: 119, airline: "American Airlines", duration: "3h 10m", stops: "Non-stop", currency: "$" },
-      "new york-los angeles": { price: 189, airline: "Delta", duration: "6h 20m", stops: "Non-stop", currency: "$" },
-      "los angeles-london": { price: 429, airline: "Virgin Atlantic", duration: "10h 30m", stops: "1 stop", currency: "$" },
-      "chicago-cancun": { price: 249, airline: "United", duration: "4h 00m", stops: "Non-stop", currency: "$" },
-      "chicago-miami": { price: 149, airline: "Spirit", duration: "3h 05m", stops: "Direct", currency: "$" },
-      "san francisco-tokyo": { price: 589, airline: "ANA", duration: "11h", stops: "Non-stop", currency: "$" },
-      "dallas-atlanta": { price: 99, airline: "Frontier", duration: "2h 20m", stops: "Non-stop", currency: "$" },
-      "seattle-new york": { price: 209, airline: "JetBlue", duration: "5h 40m", stops: "Non-stop", currency: "$" },
-      "boston-london": { price: 399, airline: "Delta", duration: "7h 10m", stops: "Non-stop", currency: "$" },
-    };
-
-    // Helper: normalize text for fuzzy matching
-    function normalize(str) {
-      return str.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-    }
-
-    // get key for database lookups: origin-city + "-" + dest-city
-    function getLookupKey(originRaw, destRaw) {
-      const originCity = originRaw.split(',')[0].trim().toLowerCase();
-      const destCity = destRaw.split(',')[0].trim().toLowerCase();
-      return `${originCity}-${destCity}`;
-    }
-
-    // also reverse key to show similar if user reverse search
-    function getReverseKey(originRaw, destRaw) {
-      const originCity = originRaw.split(',')[0].trim().toLowerCase();
-      const destCity = destRaw.split(',')[0].trim().toLowerCase();
-      return `${destCity}-${originCity}`;
-    }
-
-    function displayDemoResults(origin, destination, passengersCount) {
-      const cleanOrigin = origin.trim();
-      const cleanDest = destination.trim();
-      const key = getLookupKey(cleanOrigin, cleanDest);
-      let flightData = flightDatabase[key] || null;
-      let isReverse = false;
-
-      if (!flightData) {
-        const reverseKey = getReverseKey(cleanOrigin, cleanDest);
-        if (flightDatabase[reverseKey]) {
-          flightData = flightDatabase[reverseKey];
-          isReverse = true;
-        }
-      }
-
-      if (flightData) {
-        let routeText = isReverse ? `${cleanDest} ✈️ ${cleanOrigin}` : `${cleanOrigin} ✈️ ${cleanDest}`;
-        const passengerNote = passengersCount && passengersCount !== "1 Adult" ? ` (${passengersCount})` : '';
-        resultsListDiv.innerHTML = `
-          <div class="flight-result-item">
-            <div><strong>${routeText}</strong><br/>${flightData.airline} • ${flightData.duration} • ${flightData.stops}</div>
-            <div><span class="flight-price">${flightData.currency}${flightData.price}</span> <span style="font-size:0.8rem;">per person</span>${passengerNote}</div>
-            <div><span class="book-hint">📞 Call to book: +1-505-633-1090</span></div>
-          </div>
-          <div style="margin-top:12px; font-size:0.85rem; background:#eaf4ff; border-radius: 24px; padding: 8px 12px;">
-            💡 This unpublished fare is not visible on any booking site. Call now to lock rate.
-          </div>
-        `;
+    // Helper to show loading state
+    function setLoading(isLoading) {
+      if (isLoading) {
+        searchBtn.disabled = true;
+        searchBtn.textContent = '⏳ Searching...';
+        resultsListDiv.innerHTML = `<div class="loading-spinner"><div class="spinner"></div><p>Fetching live flight deals from Google Flights...</p></div>`;
       } else {
-        // if no exact match, still show sample nearest deals / similar offers
-        resultsListDiv.innerHTML = `
-          <div class="flight-result-item" style="flex-direction:column; align-items:flex-start; gap:8px;">
-            <div>🌟 Special unpublished rates for ${cleanOrigin} → ${cleanDest} are available.</div>
-            <div>Our agents search 500+ airlines to find you the lowest price. Call now for an instant quote.</div>
-            <div style="margin-top:8px;"><span class="book-hint">✈️ Example nearby deals: New York→Miami $119, Chicago→Cancun $249</span></div>
-          </div>
-          <div style="margin-top:12px; background:#fff2e5; border-radius:20px; padding: 10px;">
-            🎧 Speak to an expert: <strong>+1-505-633-1090</strong> — free quote, no obligation.
-          </div>
-        `;
+        searchBtn.disabled = false;
+        searchBtn.textContent = '✈️ Search Live Flights';
       }
-      resultsPanel.classList.add('active');
-      // smooth scroll to results
-      resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    searchForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const originInput = document.getElementById('origin').value;
-      const destInput = document.getElementById('destination').value;
-      let passengersSelect = document.getElementById('passengers').value;
+    // Format date to YYYY-MM-DD (already from input)
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      return dateStr;
+    }
+
+    // Call SerpAPI Google Flights endpoint
+    async function searchGoogleFlights(origin, destination, departDate, returnDate, adults) {
+      // Extract adult count from string like "2 adults"
+      const adultCount = parseInt(adults) || 1;
       
-      if (!originInput.trim() || !destInput.trim()) {
-        alert('Please enter both origin and destination cities');
+      // Build params for SerpAPI
+      const params = new URLSearchParams({
+        engine: 'google_flights',
+        api_key: SERPAPI_KEY,
+        departure_id: origin,
+        arrival_id: destination,
+        outbound_date: departDate,
+        currency: 'USD',
+        adults: adultCount,
+      });
+      
+      if (returnDate && returnDate.trim() !== '') {
+        params.append('return_date', returnDate);
+      }
+      
+      const url = `https://serpapi.com/search?${params.toString()}`;
+      
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`API responded with status ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('SerpAPI error:', error);
+        throw new Error('Failed to fetch flights. Check API key or network.');
+      }
+    }
+
+    // Render flight results from SerpAPI response
+    function renderFlightsFromAPI(apiResponse, originRaw, destRaw, passengersCount) {
+      const bestFlights = apiResponse.best_flights || apiResponse.other_flights || [];
+      
+      if (!bestFlights || bestFlights.length === 0) {
+        // Fallback: show sample if no flights or API key missing
+        resultsListDiv.innerHTML = `
+          <div style="background:#fff6e5; border-radius:24px; padding:20px; text-align:center;">
+            ✈️ No live flights found for ${originRaw} → ${destRaw}. Try different airports or dates.<br/>
+            📞 Call our agents at +1-505-633-1090 for exclusive unpublished rates.
+          </div>
+          <div class="api-warning" style="margin-top:12px;">
+            💡 Tip: Use airport codes (JFK, LAX) for better results. Get a free SerpAPI key at serpapi.com
+          </div>
+        `;
         return;
       }
       
-      displayDemoResults(originInput, destInput, passengersSelect);
-    });
+      let html = '';
+      // Display up to 5 best flights
+      const flightsToShow = bestFlights.slice(0, 5);
+      flightsToShow.forEach((flight, idx) => {
+        const price = flight.price || 'N/A';
+        const currency = flight.currency || 'USD';
+        const totalDuration = flight.total_duration ? `${Math.floor(flight.total_duration / 60)}h ${flight.total_duration % 60}m` : 'N/A';
+        const airlineNames = [...new Set(flight.flights?.map(f => f.airline) || [])].join(', ');
+        const departureTime = flight.flights?.[0]?.departure_airport?.time || '—';
+        const arrivalTime = flight.flights?.[flight.flights.length-1]?.arrival_airport?.time || '—';
+        
+        html += `
+          <div class="flight-result-item" style="border-bottom:1px solid #e2edf2; margin-bottom:12px;">
+            <div style="flex:2">
+              <strong>${airlineNames || 'Airline'}</strong><br/>
+              <span style="font-size:0.85rem;">${departureTime} → ${arrivalTime}</span><br/>
+              <span style="font-size:0.75rem; color:#4b5563;">✈️ Duration: ${totalDuration}</span>
+            </div>
+            <div style="text-align:right">
+              <span class="flight-price">${currency === 'USD' ? '$' : ''}${price}</span><br/>
+              <span class="book-hint">📞 Call to book</span>
+            </div>
+          </div>
+        `;
+      });
+      
+      html += `
+        <div style="margin-top:16px; background:#eef2ff; border-radius:20px; padding:12px; font-size:0.85rem;">
+          🔥 These are live Google Flights rates. Call us at +1-505-633-1090 to get unpublished fares even lower than shown!
+        </div>
+      `;
+      resultsListDiv.innerHTML = html;
+    }
 
-    // if you want to trigger initial demo on page load? optionally show default search for "New York → Miami"
+    // Main search handler with API calling
+    async function performLiveSearch(origin, destination, departDate, returnDate, passengersCount) {
+      // Basic validation
+      if (!origin || !destination) {
+        resultsListDiv.innerHTML = `<div class="api-warning">⚠️ Please enter both departure and arrival cities/airports.</div>`;
+        return;
+      }
+      
+      // Check if API key is set
+      if (SERPAPI_KEY === 'YOUR_SERPAPI_KEY') {
+        resultsListDiv.innerHTML = `
+          <div style="background:#ffe6e6; border-radius:24px; padding:20px;">
+            🔑 <strong>API key missing</strong><br/>
+            To enable live Google Flights search, get a <strong>free SerpAPI key</strong> at 
+            <a href="https://serpapi.com" target="_blank">serpapi.com</a> (100 free searches/month).<br/><br/>
+            Then replace <code>'YOUR_SERPAPI_KEY'</code> in the JavaScript with your actual key.<br/>
+            <hr style="margin:12px 0"/>
+            📞 Meanwhile, call our experts at +1-505-633-1090 for unpublished flight deals.
+          </div>
+          <div style="margin-top:16px; background:#f0f9ff; border-radius:16px; padding:16px;">
+            ✨ <strong>Demo sample fares for ${origin} → ${destination}</strong><br/>
+            💰 Starting from $119 (one-way) • Call now to secure.
+          </div>
+        `;
+        return;
+      }
+      
+      setLoading(true);
+      try {
+        const apiData = await searchGoogleFlights(origin, destination, departDate, returnDate, passengersCount);
+        if (apiData.error) {
+          throw new Error(apiData.error);
+        }
+        renderFlightsFromAPI(apiData, origin, destination, passengersCount);
+      } catch (err) {
+        console.error(err);
+        resultsListDiv.innerHTML = `
+          <div style="background:#ffefef; border-radius:24px; padding:20px;">
+            ⚠️ Could not fetch live flights: ${err.message}<br/><br/>
+            🔄 Check your API key or try again later. Our agents are always ready to help: +1-505-633-1090
+          </div>
+          <div style="margin-top:12px; font-size:0.85rem;">
+            💡 Tip: Ensure your SerpAPI key is valid and you have remaining queries. Alternatively, use airport codes (JFK, LHR).
+          </div>
+        `;
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // Event listener for search form submission
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const originInput = document.getElementById('origin').value.trim();
+      const destInput = document.getElementById('destination').value.trim();
+      const departDate = document.getElementById('departDate').value;
+      const returnDate = document.getElementById('returnDate').value;
+      const passengersSelect = document.getElementById('passengers').value;
+      
+      if (!originInput || !destInput) {
+        alert('Please enter origin and destination.');
+        return;
+      }
+      if (!departDate) {
+        alert('Please select a departure date.');
+        return;
+      }
+      
+      performLiveSearch(originInput, destInput, departDate, returnDate, passengersSelect);
+    });
+    
+    // Optional preload on page load: show a demo message
     window.addEventListener('DOMContentLoaded', () => {
-      // pre-fill with a sample result for better UX (like reference site's deals)
-      const defaultOrigin = document.getElementById('origin').value;
-      const defaultDest = document.getElementById('destination').value;
-      const defaultPax = document.getElementById('passengers').value;
-      displayDemoResults(defaultOrigin, defaultDest, defaultPax);
+      // If API key placeholder, show instruction; otherwise keep blank.
+      if (SERPAPI_KEY === 'YOUR_SERPAPI_KEY') {
+        resultsListDiv.innerHTML = `
+          <div style="background:#fef9e3; border-radius:20px; padding:16px;">
+            🌐 <strong>Live Google Flights Search Ready</strong><br/>
+            To enable real-time flight results, <a href="https://serpapi.com" target="_blank">get your free SerpAPI key</a> and paste it into the code.<br/>
+            <span style="font-size:0.75rem;">(Replace 'YOUR_SERPAPI_KEY' in the script)</span><br/><br/>
+            📞 Or simply call us for the best unpublished fares: +1-505-633-1090
+          </div>
+        `;
+      } else {
+        resultsListDiv.innerHTML = `<div style="text-align:center; padding:20px;">✨ Enter departure & destination and click "Search Live Flights" to see Google Flights results.</div>`;
+      }
     });
   </script>
 </body>
