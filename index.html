@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>SkySwift Trips | Cheap Flights & Travel Deals</title>
-  <!-- Google Fonts + Font Awesome -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>SkyJet Express | Flight Search & Exclusive Deals</title>
+  <!-- Google Fonts & simple reset -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -16,736 +15,522 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
-      color: #1a2c3e;
+      background-color: #f5f7fc;
+      color: #111827;
+      line-height: 1.5;
       scroll-behavior: smooth;
     }
 
+    /* container utility */
     .container {
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
-    /* header & navigation */
-    .navbar {
+    /* top urgency bar */
+    .top-bar {
+      background: #d62828;
+      color: white;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      padding: 20px 0;
-      gap: 20px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .top-bar span {
+      background: #ffea00;
+      color: #1f2937;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+    .hot-badge {
+      background: #ffb703;
+      color: #1f2937;
+      border-radius: 40px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
     }
 
-    .logo {
-      font-size: 28px;
+    /* main header / menu */
+    .site-header {
+      background-color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      border-bottom: 1px solid #eef2f6;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 16px 0;
+      gap: 16px;
+    }
+    .logo h1 {
+      font-size: 1.8rem;
       font-weight: 800;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #0f2b3d, #1e5a7d);
+      background: linear-gradient(135deg, #1e3c72, #2b4c7c);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      letter-spacing: -0.5px;
     }
-
-    .logo span {
-      color: #f9a826;
-      background: none;
-      -webkit-background-clip: unset;
-      background-clip: unset;
+    .logo p {
+      font-size: 0.75rem;
+      color: #4b5563;
+      margin-top: 4px;
     }
-
-    .nav-links {
+    .menu-links {
       display: flex;
       gap: 28px;
-      font-weight: 500;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: #2c3e50;
-      transition: 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: #f9a826;
-    }
-
-    .cta-phone {
-      background: #f9a826;
-      padding: 10px 20px;
-      border-radius: 40px;
-      font-weight: 700;
-      color: #1e2f3e;
-      text-decoration: none;
-      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      transition: 0.2s;
-    }
-
-    .cta-phone:hover {
-      background: #e0930c;
-      transform: scale(1.02);
-    }
-
-    /* flight search card (main hero) */
-    .hero-search {
-      background: linear-gradient(105deg, #eef5fa 0%, #e0edf5 100%);
-      border-radius: 48px;
-      padding: 40px 32px 48px;
-      margin: 24px 0 48px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.05);
-    }
-
-    .hero-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: #0b2b3b;
-    }
-
-    .hero-sub {
-      font-size: 1.1rem;
-      color: #2c4b60;
-      margin-bottom: 32px;
-    }
-
-    .flight-search-card {
-      background: white;
-      border-radius: 40px;
-      padding: 28px 24px;
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
-    }
-
-    .trip-type {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 24px;
       font-weight: 600;
     }
-
-    .trip-type label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      color: #2c5a74;
-    }
-
-    .search-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 0.9fr 0.6fr;
-      gap: 16px;
-      align-items: end;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .input-group label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #5e7e97;
-    }
-
-    .input-group input, .input-group select {
-      padding: 12px 14px;
-      border-radius: 24px;
-      border: 1px solid #cfdfe9;
-      background: #fefefe;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
+    .menu-links a {
+      text-decoration: none;
+      color: #1f2937;
       transition: 0.2s;
     }
+    .menu-links a:hover {
+      color: #d62828;
+    }
+    .call-cta-small {
+      background: #1e3c72;
+      color: white !important;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+    }
 
+    /* HERO + FLIGHT SEARCH SECTION (after menu header) */
+    .hero-search {
+      background: linear-gradient(107deg, #eef2ff 0%, #ffffff 100%);
+      padding: 48px 0 56px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .search-card {
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+      padding: 28px 32px;
+      margin-top: 12px;
+    }
+    .flight-search-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 24px;
+      text-align: center;
+      color: #0b2b40;
+    }
+    .flight-search-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-end;
+    }
+    .input-group {
+      flex: 1;
+      min-width: 140px;
+    }
+    .input-group label {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #2c3e66;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 20px;
+      border: 1px solid #cfdee9;
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: #fff;
+      transition: 0.2s;
+    }
     .input-group input:focus, .input-group select:focus {
       outline: none;
-      border-color: #f9a826;
-      box-shadow: 0 0 0 2px rgba(249,168,38,0.2);
+      border-color: #d62828;
+      box-shadow: 0 0 0 3px rgba(214,40,40,0.1);
     }
-
     .search-btn {
-      background: #f9a826;
+      background: #d62828;
       border: none;
-      padding: 12px 20px;
-      border-radius: 40px;
+      color: white;
       font-weight: 800;
+      padding: 12px 32px;
+      border-radius: 40px;
       font-size: 1rem;
-      color: #1f3b48;
       cursor: pointer;
       transition: 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 6px;
-    }
-
-    .search-btn:hover {
-      background: #e59610;
-      transform: translateY(-2px);
-    }
-
-    /* badges & exclusives */
-    .feature-banner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 30px;
-      margin: 60px 0 40px;
-    }
-
-    .feature-card {
-      flex: 1;
-      background: #f9fbfd;
-      border-radius: 28px;
-      padding: 24px 20px;
-      text-align: center;
-      transition: 0.2s;
-      border: 1px solid #e6f0f5;
-    }
-
-    .feature-card i {
-      font-size: 2.5rem;
-      color: #f9a826;
-      margin-bottom: 16px;
-    }
-
-    .feature-card h3 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-    }
-
-    .feature-card p {
-      color: #4f6f87;
-      font-size: 0.9rem;
-    }
-
-    /* deal section under $158 */
-    .deals-section {
-      margin: 60px 0;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      margin-bottom: 28px;
-    }
-
-    .section-header h2 {
-      font-size: 1.9rem;
-      font-weight: 800;
-    }
-
-    .badge {
-      background: #feeedb;
-      padding: 6px 14px;
-      border-radius: 50px;
-      font-weight: 600;
-      color: #c46f0a;
-    }
-
-    .deal-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 26px;
-    }
-
-    .deal-item {
-      background: #ffffff;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      transition: 0.2s;
-      border: 1px solid #e9f0f4;
-    }
-
-    .deal-img {
-      height: 160px;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-
-    .deal-content {
-      padding: 16px 18px 22px;
-    }
-
-    .price {
-      font-size: 1.7rem;
-      font-weight: 800;
-      color: #0f2b3d;
-    }
-
-    .price small {
-      font-size: 0.8rem;
-      font-weight: 400;
-    }
-
-    .destination {
-      font-weight: 700;
-      margin: 8px 0;
-      font-size: 1.2rem;
-    }
-
-    /* exclusive callout */
-    .exclusive-callout {
-      background: linear-gradient(115deg, #102b38 0%, #1b4b62 100%);
-      border-radius: 48px;
-      padding: 38px 32px;
-      margin: 56px 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-    }
-
-    .exclusive-text h3 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .exclusive-text p {
-      opacity: 0.85;
-    }
-
-    .call-now-btn {
-      background: #f9a826;
-      padding: 14px 32px;
-      border-radius: 60px;
-      font-weight: 800;
-      font-size: 1.3rem;
-      color: #1f2f3a;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      transition: 0.2s;
-    }
-
-    .call-now-btn:hover {
-      background: #ffbc4a;
-      transform: scale(1.02);
-    }
-
-    /* testimonials */
-    .testimonials {
-      margin: 70px 0;
-    }
-
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-      margin-top: 32px;
-    }
-
-    .testimonial-card {
-      background: #fafeff;
-      padding: 28px;
-      border-radius: 32px;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.04);
-      border: 1px solid #deedf5;
-    }
-
-    .stars {
-      color: #f9a826;
-      margin-bottom: 12px;
-    }
-
-    .testimonial-card p {
-      font-style: normal;
-      line-height: 1.5;
-      margin: 15px 0;
-      color: #2c4b60;
-    }
-
-    .customer-name {
-      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(214,40,40,0.3);
       margin-top: 8px;
     }
-
-    /* why us */
-    .why-us {
-      background: #f1f7fb;
-      border-radius: 48px;
-      padding: 48px 40px;
-      margin: 60px 0;
-      text-align: center;
+    .search-btn:hover {
+      background: #b11f1f;
+      transform: scale(0.97);
     }
-
-    .why-us h2 {
-      font-size: 2rem;
-      margin-bottom: 24px;
+    .demo-results {
+      margin-top: 28px;
+      background: #f8fafc;
+      border-radius: 28px;
+      padding: 18px 24px;
+      border-left: 4px solid #d62828;
+      display: none;
     }
-
-    .why-us p {
-      max-width: 800px;
-      margin: 0 auto 20px;
-      color: #2e5773;
-      line-height: 1.5;
+    .demo-results.active {
+      display: block;
     }
-
-    /* FOOTER — enhanced with about, contact, terms, privacy */
-    footer {
-      background: #0b222e;
-      color: #cbdbe2;
-      padding: 48px 0 32px;
-      border-radius: 32px 32px 0 0;
-      margin-top: 60px;
-    }
-
-    .footer-grid {
+    .flight-result-item {
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
-      gap: 40px;
-      margin-bottom: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 14px 0;
+      border-bottom: 1px solid #e2edf2;
     }
-
-    .footer-brand {
-      flex: 1.2;
-      min-width: 180px;
-    }
-
-    .footer-brand .logo-footer {
-      font-size: 28px;
+    .flight-price {
       font-weight: 800;
-      background: linear-gradient(135deg, #ffffff, #b8d0e0);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #1e3c72;
+    }
+    .book-hint {
+      font-size: 0.8rem;
+      background: #eef2ff;
+      padding: 4px 12px;
+      border-radius: 24px;
+      color: #2c3e66;
     }
 
-    .footer-brand p {
-      font-size: 0.85rem;
-      opacity: 0.8;
-      line-height: 1.4;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 48px;
-    }
-
-    .footer-col h4 {
-      color: #f9a826;
-      margin-bottom: 18px;
-      font-size: 1rem;
-      letter-spacing: 0.5px;
-    }
-
-    .footer-col ul {
-      list-style: none;
-    }
-
-    .footer-col ul li {
-      margin-bottom: 10px;
-    }
-
-    .footer-col ul li a {
-      text-decoration: none;
-      color: #cad8e3;
-      font-size: 0.85rem;
-      transition: 0.2s;
-    }
-
-    .footer-col ul li a:hover {
-      color: #f9a826;
-      padding-left: 3px;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid #2a4657;
-      padding-top: 24px;
+    /* rest of the page (similar style to original) */
+    .phone-cta-banner {
+      background: #0f2b3d;
+      color: white;
       text-align: center;
-      font-size: 0.75rem;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
+      padding: 24px;
+      margin: 40px 20px 20px;
+      border-radius: 48px;
     }
-
-    .footer-bottom a {
-      color: #bdd4e2;
+    .features-grid, .steps-grid, .deals-grid, .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      margin: 48px 0;
+    }
+    .card {
+      background: white;
+      padding: 24px;
+      border-radius: 28px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+      transition: 0.2s;
+      border: 1px solid #edf2f7;
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+    .price-badge {
+      font-weight: 800;
+      font-size: 1.8rem;
+      color: #d62828;
+    }
+    .btn-phone {
+      background: #ffcd38;
+      color: #0a2f44;
+      font-weight: 800;
+      padding: 14px 28px;
+      border-radius: 60px;
       text-decoration: none;
-      margin: 0 6px;
+      display: inline-block;
     }
-
-    .footer-bottom a:hover {
-      color: #f9a826;
+    footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 32px 0;
+      margin-top: 56px;
+      text-align: center;
     }
-
-    @media (max-width: 850px) {
-      .search-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
-      .navbar {
+    @media (max-width: 760px) {
+      .flight-search-form {
         flex-direction: column;
       }
-      .hero-title {
-        font-size: 1.8rem;
+      .search-btn {
+        width: 100%;
       }
-      .exclusive-callout {
+      .nav-container {
         flex-direction: column;
-        text-align: center;
-        gap: 20px;
-      }
-      .footer-grid {
-        flex-direction: column;
-        gap: 30px;
-      }
-      .footer-links {
-        flex-direction: column;
-        gap: 28px;
       }
     }
   </style>
 </head>
 <body>
-
-<div class="container">
-  <!-- Header -->
-  <div class="navbar">
-    <div class="logo">SkySwift <span>Trips</span></div>
-    <div class="nav-links">
-      <a href="#">Flights</a>
-      <a href="#">Deals</a>
-      <a href="#">Support</a>
-    </div>
+  <!-- Top urgency (inspired by reference) -->
+  <div class="top-bar">
+    ✈️ LIMITED TIME: Call now for unpublished fares — agents standing by!
+    <span>🔥 EXCLUSIVE PHONE-ONLY FARES</span>
   </div>
 
-  <!-- Hero + FLIGHT SEARCH (pattern similar to asaptrips) -->
-  <div class="hero-search">
-    <div class="hero-title">Book Flights From 600+ Airlines</div>
-    <div class="hero-sub">Compare & Save — Best price guaranteed, 24/7 travel experts</div>
-    
-    <div class="flight-search-card">
-      <div class="trip-type">
-        <label><input type="radio" name="trip" value="round" checked> <i class="fas fa-exchange-alt"></i> Round-trip</label>
-        <label><input type="radio" name="trip" value="oneway"> <i class="fas fa-arrow-right"></i> One-way</label>
+  <!-- Menu Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-container">
+        <div class="logo">
+          <h1>✈️ SkyJet Express</h1>
+          <p>unpublished fares • 24/7 experts</p>
+        </div>
+        <div class="menu-links">
+          <a href="#">Deals</a>
+          <a href="#">Destinations</a>
+          <a href="#">Support</a>
+          <a href="#" class="call-cta-small">📞 +1-505-633-1090</a>
+        </div>
       </div>
-      <div class="search-grid">
-        <div class="input-group">
-          <label>From</label>
-          <input type="text" id="origin" placeholder="New York (JFK)" value="New York">
+    </div>
+  </header>
+
+  <!-- FLIGHT SEARCH SECTION (after menu header) -->
+  <section class="hero-search">
+    <div class="container">
+      <div class="search-card">
+        <div class="flight-search-title">
+          🔍 Search flights — best rates guaranteed
         </div>
-        <div class="input-group">
-          <label>To</label>
-          <input type="text" id="dest" placeholder="Los Angeles (LAX)" value="Los Angeles">
+        <form id="flightSearchForm" class="flight-search-form">
+          <div class="input-group">
+            <label>✈️ From</label>
+            <input type="text" id="origin" placeholder="New York (JFK)" value="New York">
+          </div>
+          <div class="input-group">
+            <label>📍 To</label>
+            <input type="text" id="destination" placeholder="Los Angeles (LAX)" value="Miami">
+          </div>
+          <div class="input-group">
+            <label>📅 Departure</label>
+            <input type="date" id="departDate" value="2026-05-15">
+          </div>
+          <div class="input-group">
+            <label>🔄 Return (optional)</label>
+            <input type="date" id="returnDate">
+          </div>
+          <div class="input-group">
+            <label>👥 Passengers</label>
+            <select id="passengers">
+              <option>1 Adult</option>
+              <option>2 Adults</option>
+              <option>3 Adults</option>
+              <option>4 Adults</option>
+            </select>
+          </div>
+          <button type="submit" class="search-btn">✈️ Search Flights</button>
+        </form>
+        <!-- dynamic search results panel -->
+        <div id="searchResultsPanel" class="demo-results">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong>✈️ Live exclusive phone-rate matches</strong>
+            <span class="book-hint">📞 Call to book these exact fares</span>
+          </div>
+          <div id="resultsList"></div>
+          <div style="margin-top: 16px; text-align: center; font-size: 0.85rem; color: #2c5f8a;">
+            ⚡ Showing sample unpublished rates — call +1-505-633-1090 to secure.
+          </div>
         </div>
-        <div class="input-group">
-          <label>Departure</label>
-          <input type="date" id="departure" value="2026-05-20">
-        </div>
-        <div class="input-group">
-          <label>Return (optional)</label>
-          <input type="date" id="return">
-        </div>
-        <div class="input-group" style="grid-column: span 1;">
-          <label>Passengers</label>
-          <select id="pax">
-            <option>1 Adult</option>
-            <option>2 Adults</option>
-            <option>3 Adults</option>
-            <option>Family (2+1)</option>
-          </select>
-        </div>
-        <button class="search-btn" id="flightSearchBtn"><i class="fas fa-plane-departure"></i> Search Flights</button>
       </div>
-      <div id="searchFeedback" style="margin-top: 20px; font-size: 0.85rem; color: #2c6b4a; font-weight: 500; text-align: center;"></div>
     </div>
-  </div>
+  </section>
 
-  <!-- Features -->
-  <div class="feature-banner">
-    <div class="feature-card"><i class="fas fa-user-tie"></i><h3>Team of Travel Pros</h3><p>Round-the-clock experts assist your bookings</p></div>
-    <div class="feature-card"><i class="fas fa-tag"></i><h3>Best Price Guaranteed</h3><p>Budget-friendly flights, no hidden fees</p></div>
-    <div class="feature-card"><i class="fas fa-lock"></i><h3>Secure Payment</h3><p>Hassle-free & encrypted booking platform</p></div>
-  </div>
-
-  <!-- Travel deals under $158 -->
-  <div class="deals-section">
-    <div class="section-header">
-      <h2>✈️ Travel deals under <span style="color:#f9a826">$158</span></h2>
-      <div class="badge">Save up to 20%</div>
-    </div>
-    <div class="deal-cards">
-      <div class="deal-item"><div class="deal-img" style="background-image: linear-gradient(125deg, #ffc371, #ff9f4a), url('https://placehold.co/400x180/ffe0b5/white?text=Miami'); background-blend-mode: overlay;"></div><div class="deal-content"><div class="price">$129 <small>roundtrip</small></div><div class="destination">Miami Getaway</div><div class="badge" style="display: inline-block;">limited</div></div></div>
-      <div class="deal-item"><div class="deal-img" style="background-image: linear-gradient(125deg, #6dc3e6, #3498db), url('https://placehold.co/400x180/c9e9ff/white?text=Orlando'); background-blend-mode: overlay;"></div><div class="deal-content"><div class="price">$149 <small>roundtrip</small></div><div class="destination">Orlando Theme Parks</div></div></div>
-      <div class="deal-item"><div class="deal-img" style="background-image: linear-gradient(125deg, #b2dfb0, #5ba55b), url('https://placehold.co/400x180/d9f0d9/white?text=Nashville'); background-blend-mode: overlay;"></div><div class="deal-content"><div class="price">$117 <small>one-way</small></div><div class="destination">Nashville Music City</div></div></div>
-      <div class="deal-item"><div class="deal-img" style="background-image: linear-gradient(125deg, #f5b7b1, #e67e70), url('https://placehold.co/400x180/fce4e0/white?text=Vegas'); background-blend-mode: overlay;"></div><div class="deal-content"><div class="price">$99 <small>one-way</small></div><div class="destination">Las Vegas Escape</div></div></div>
-    </div>
-  </div>
-
-  <!-- Exclusive callout -->
-  <div class="exclusive-callout">
-    <div class="exclusive-text">
-      <h3><i class="fas fa-fire"></i> exclusive deals</h3>
-      <p>Call now and let our professional agents book your ticket at the best price</p>
-    </div>
-    <a href="tel:+18888450220" class="call-now-btn"><i class="fas fa-phone-alt"></i> +1-888-845-0220</a>
-  </div>
-
-  <!-- Why pay more? -->
-  <div class="why-us">
-    <h2>Why pay more? Fly cheap with SkySwift Trips.</h2>
-    <p>Traveling is fun until it comes to online flight ticket booking. Finding the best deal on domestic and international flights is now easy with SkySwift Trips — a leading US-based travel agency. Whether planning a family vacation, solo trip, honeymoon or group trip, we help you get cheap flight tickets. From budget to luxury, we've got your journey covered.</p>
-    <p>We work with 600+ airlines, providing best price flight bookings and last-minute deals. Our travel experts are ready to help you choose the cheapest flight tickets in the USA for domestic & international routes. Explore the world without breaking the bank — your next adventure starts here.</p>
-  </div>
-
-  <!-- Testimonials -->
-  <div class="testimonials">
-    <h2 style="font-size: 1.9rem; text-align: center;">What customers say about us</h2>
-    <div class="testimonial-grid">
-      <div class="testimonial-card"><div class="stars">★★★★★</div><p>“I would like to appreciate the SkySwift Trips team's efforts to book my tickets to Dubai at very short notice. Their prices were lower than other websites. Highly reliable travel agency in the USA!”</p><div class="customer-name">— Eric Asher</div><div style="font-size:0.7rem; color:#8aaec0;">Oct 28, 2025</div></div>
-      <div class="testimonial-card"><div class="stars">★★★★★</div><p>“Recently booked last-minute flights from SkySwift Trips! I was surprised to see low rates. Finding cheap last-minute tickets is hard, but they made it effortless. Thank you!”</p><div class="customer-name">— Ashley Barber</div><div style="font-size:0.7rem; color:#8aaec0;">Sep 29, 2025</div></div>
-      <div class="testimonial-card"><div class="stars">★★★★★</div><p>“I was looking for a family trip package to Punta Cana and found SkySwift Trips. Prices were cheaper than any other option. Their team stayed in touch throughout the whole trip. Will book again!”</p><div class="customer-name">— Reagan May</div><div style="font-size:0.7rem; color:#8aaec0;">Oct 10, 2025</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- FOOTER with About, Contact, Terms, Privacy (plus additional pages) -->
-<footer>
+  <!-- rest of the landing page (inspired by the original) -->
   <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo-footer">SkySwift <span style="color:#f9a826;">Trips</span></div>
-        <p>Cheap flights from 600+ airlines. Best price guaranteed, 24/7 expert support. Travel smarter with SkySwift.</p>
-        <p style="margin-top: 12px;"><i class="fas fa-phone-alt"></i> +1-888-845-0220<br><i class="fas fa-envelope"></i> support@skyswiftrips.com</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="#" id="aboutLink">About Us</a></li>
-            <li><a href="#" id="contactLink">Contact</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Blog</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <ul>
-            <li><a href="#" id="termsLink">Terms of Service</a></li>
-            <li><a href="#" id="privacyLink">Privacy Policy</a></li>
-            <li><a href="#">Cookie Settings</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Resources</h4>
-          <ul>
-            <li><a href="#">FAQs</a></li>
-            <li><a href="#">Travel Guide</a></li>
-            <li><a href="#">Flight Status</a></li>
-          </ul>
-        </div>
-      </div>
+    <!-- phone only banner -->
+    <div class="phone-cta-banner">
+      <h2>🔥 Don't book online — you'll overpay!</h2>
+      <p style="margin: 12px 0;">Exclusive consolidator rates not sold on any website. Our agents beat any online price.</p>
+      <a href="tel:+15056331090" style="background: white; color:#0f2b3d; padding:12px 28px; border-radius: 40px; font-weight:800; text-decoration:none; display:inline-block;">📞 CALL NOW → +1-505-633-1090</a>
+      <div style="margin-top: 16px;">✨ 12 agents available now • Free quote • No obligation</div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 SkySwift Trips — All rights reserved.</span>
-      <span>
-        <a href="#" id="aboutLink2">About</a> | 
-        <a href="#" id="contactLink2">Contact</a> | 
-        <a href="#" id="termsLink2">Terms</a> | 
-        <a href="#" id="privacyLink2">Privacy</a>
-      </span>
+
+    <!-- airline logos banner -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; margin: 32px 0; font-weight: 700; color: #334155;">
+      <span>✈️ DELTA</span> <span>✈️ UNITED</span> <span>✈️ AMERICAN</span> <span>✈️ SOUTHWEST</span> <span>✈️ JETBLUE</span> <span>✈️ SPIRIT</span> <span>✈️ FRONTIER</span>
+    </div>
+
+    <!-- why call experts -->
+    <h2 style="font-size: 2rem; margin: 40px 0 20px; text-align: center;">Why call our travel experts?</h2>
+    <div class="features-grid">
+      <div class="card"><div class="feature-icon">📞</div><h3>Unpublished Fares</h3><p>Access exclusive airline deals & consolidator rates not available online.</p></div>
+      <div class="card"><div class="feature-icon">🕒</div><h3>24/7 Availability</h3><p>Our travel experts are available around the clock, every day.</p></div>
+      <div class="card"><div class="feature-icon">🏆</div><h3>Best Price Guarantee</h3><p>Found a lower fare? We'll match or beat it.</p></div>
+      <div class="card"><div class="feature-icon">👥</div><h3>Personalized Service</h3><p>Real human agents craft the perfect itinerary.</p></div>
+      <div class="card"><div class="feature-icon">🔄</div><h3>Free Cancellation Help</h3><p>We help with cancellations & rebooking zero hassle.</p></div>
+      <div class="card"><div class="feature-icon">🌍</div><h3>All Destinations</h3><p>Domestic & international, every route worldwide.</p></div>
+    </div>
+
+    <!-- steps -->
+    <h2 style="font-size: 2rem; margin: 20px 0; text-align: center;">Book in 3 Easy Steps</h2>
+    <div class="steps-grid">
+      <div class="card"><span style="font-size:2rem;">1</span><h3>📞 Call Us</h3><p>Dial +1-505-633-1090 & connect instantly.</p></div>
+      <div class="card"><span style="font-size:2rem;">2</span><h3>🗺️ Tell Plans</h3><p>Share destination, dates. We search 500+ airlines.</p></div>
+      <div class="card"><span style="font-size:2rem;">3</span><h3>💳 Save & Fly</h3><p>Book securely, get e-ticket instantly.</p></div>
+    </div>
+
+    <!-- Today's best flight deals (phone-only) -->
+    <h2 style="font-size: 2rem; margin: 40px 0 20px;">🔥 Today's Best Flight Deals</h2>
+    <div class="deals-grid">
+      <div class="card"><span class="hot-badge" style="background:#d62828; color:white;">HOT DEAL</span><h3>New York ✈️ Miami</h3><p>Round trip • Economy • Non-stop</p><div class="price-badge">$119*</div><small>Phone exclusive</small></div>
+      <div class="card"><span class="hot-badge" style="background:#ffb703;">BIG SAVINGS</span><h3>Los Angeles ✈️ London</h3><p>Round trip • Economy • 1 Stop</p><div class="price-badge">$429*</div><small>Phone exclusive</small></div>
+      <div class="card"><span class="hot-badge" style="background:#0f7173; color:white;">LIMITED</span><h3>Chicago ✈️ Cancun</h3><p>Round trip • Economy • Non-stop</p><div class="price-badge">$249*</div><small>Phone exclusive</small></div>
+    </div>
+
+    <!-- testimonials -->
+    <div class="testimonials">
+      <div class="card">⭐ “Agent found me a fare to London I couldn’t find anywhere online. Saved a ton!”<br/><strong>— Michael J.</strong> NYC → London</div>
+      <div class="card">⭐ “I was on hold for 2 hours with airline. Called SkyJet and booked in 10 minutes at much better rate.”<br/><strong>— Sarah L.</strong> LA → Tokyo</div>
+      <div class="card">⭐ “Last-minute emergency, agent worked magic and got us all on same flight. Lifesaver!”<br/><strong>— Robert K.</strong> Dallas → Atlanta</div>
+    </div>
+
+    <!-- final CTA -->
+    <div style="background:#0e2a38; border-radius: 48px; padding: 40px 24px; text-align: center; color: white; margin: 40px 0;">
+      <h2>Don't Overpay. Call Now for Exclusive Deals</h2>
+      <p style="margin: 16px 0;">Agents standing by with unpublished fares. Free quote.</p>
+      <a href="tel:+15056331090" style="background:#ffcd38; color:#0e2a38; padding: 14px 34px; border-radius: 60px; text-decoration: none; font-weight: 800; font-size: 1.4rem; display: inline-block;">📞 +1-505-633-1090</a>
+      <p style="margin-top: 18px;">Free call • No obligation • Avg hold: 15 sec</p>
+    </div>
+
+    <!-- FAQ simple -->
+    <div style="margin: 48px 0;">
+      <h3 style="font-size: 1.8rem;">Frequently asked questions</h3>
+      <details style="margin-top: 20px;"><summary style="font-weight:700;">How do you find cheaper fares than online?</summary><p>We work directly with airlines and have access to consolidator fares, group rates, and unpublished deals not on public sites.</p></details>
+      <details><summary style="font-weight:700;">Is there a fee for calling?</summary><p>No! The call is free, no obligation. A small service fee may apply at booking.</p></details>
+      <details><summary style="font-weight:700;">Can I cancel or change my booking?</summary><p>Yes, most bookings can be changed/cancelled per airline policy. We explain fees upfront.</p></details>
+      <details><summary style="font-weight:700;">Do you book international flights?</summary><p>Absolutely! Any destination worldwide, including multi-city.</p></details>
+      <details><summary style="font-weight:700;">Are my payment details secure?</summary><p>Yes, PCI-compliant systems. We never store full credit card details.</p></details>
     </div>
   </div>
-</footer>
 
-<!-- Dynamic Modal for About / Contact / Terms / Privacy content (simple popup) -->
-<div id="infoModal" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center;">
-  <div style="background: white; max-width: 550px; width: 90%; border-radius: 32px; padding: 28px; max-height: 80vh; overflow-y: auto; font-family: Inter, sans-serif;">
-    <div style="display: flex; justify-content: space-between; margin-bottom: 16px;"><h3 id="modalTitle" style="color:#1f3b48;">Info</h3><button id="closeModalBtn" style="background: none; border: none; font-size: 28px; cursor: pointer;">&times;</button></div>
-    <div id="modalContent" style="color: #2c3e50; line-height: 1.5;"></div>
-  </div>
-</div>
+  <footer>
+    <div class="container">
+      <p>✈️ SkyJet Express — exclusive unpublished airfares. Call 24/7: +1-505-633-1090</p>
+      <p style="margin-top: 12px;">© 2025 • All rights reserved • Prices are sample phone-only offers, subject to availability</p>
+    </div>
+  </footer>
 
-<script>
-  // Flight search simulation
-  const searchBtn = document.getElementById('flightSearchBtn');
-  const originInput = document.getElementById('origin');
-  const destInput = document.getElementById('dest');
-  const departDate = document.getElementById('departure');
-  const returnDate = document.getElementById('return');
-  const paxSelect = document.getElementById('pax');
-  const feedbackDiv = document.getElementById('searchFeedback');
+  <script>
+    // FLIGHT SEARCH LOGIC (dynamic search simulation based on user input)
+    const searchForm = document.getElementById('flightSearchForm');
+    const resultsPanel = document.getElementById('searchResultsPanel');
+    const resultsListDiv = document.getElementById('resultsList');
 
-  function simulateFlightSearch() {
-    const origin = originInput.value.trim() || "New York";
-    const dest = destInput.value.trim() || "Los Angeles";
-    const depart = departDate.value ? departDate.value : "May 20, 2026";
-    const returnVal = returnDate.value;
-    const pax = paxSelect.value;
-    const tripRadios = document.getElementsByName('trip');
-    let tripType = "Round-trip";
-    for(let radio of tripRadios) {
-      if(radio.checked) {
-        tripType = radio.value === "round" ? "Round-trip" : "One-way";
-        break;
-      }
+    // Sample flight data (simulates phone-only unpublished fares)
+    const flightDatabase = {
+      "new york-miami": { price: 119, airline: "American Airlines", duration: "3h 10m", stops: "Non-stop", currency: "$" },
+      "new york-los angeles": { price: 189, airline: "Delta", duration: "6h 20m", stops: "Non-stop", currency: "$" },
+      "los angeles-london": { price: 429, airline: "Virgin Atlantic", duration: "10h 30m", stops: "1 stop", currency: "$" },
+      "chicago-cancun": { price: 249, airline: "United", duration: "4h 00m", stops: "Non-stop", currency: "$" },
+      "chicago-miami": { price: 149, airline: "Spirit", duration: "3h 05m", stops: "Direct", currency: "$" },
+      "san francisco-tokyo": { price: 589, airline: "ANA", duration: "11h", stops: "Non-stop", currency: "$" },
+      "dallas-atlanta": { price: 99, airline: "Frontier", duration: "2h 20m", stops: "Non-stop", currency: "$" },
+      "seattle-new york": { price: 209, airline: "JetBlue", duration: "5h 40m", stops: "Non-stop", currency: "$" },
+      "boston-london": { price: 399, airline: "Delta", duration: "7h 10m", stops: "Non-stop", currency: "$" },
+    };
+
+    // Helper: normalize text for fuzzy matching
+    function normalize(str) {
+      return str.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
     }
-    let returnMsg = "";
-    if(tripType === "Round-trip" && returnVal) returnMsg = `, return ${returnVal}`;
-    else if(tripType === "Round-trip" && !returnVal) returnMsg = " (return date flexible)";
-    feedbackDiv.innerHTML = `✈️ Searching best flights from ${origin.toUpperCase()} to ${dest.toUpperCase()} on ${depart}${returnMsg} for ${pax}. Finding cheapest options... <i class="fas fa-spinner fa-pulse"></i>`;
-    setTimeout(() => {
-      feedbackDiv.innerHTML = `✅ Great news! Flights available from $147* for ${tripType}. Call +1-888-845-0220 to book instantly & unlock exclusive rates.`;
-      setTimeout(() => { if(feedbackDiv.innerHTML.includes("✅")) setTimeout(() => {}, 4000); }, 100);
-    }, 900);
-  }
-  searchBtn.addEventListener('click', (e) => { e.preventDefault(); simulateFlightSearch(); });
 
-  // Modal Logic for about, contact, terms, privacy
-  const modal = document.getElementById('infoModal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalContent = document.getElementById('modalContent');
-  const closeModal = document.getElementById('closeModalBtn');
+    // get key for database lookups: origin-city + "-" + dest-city
+    function getLookupKey(originRaw, destRaw) {
+      const originCity = originRaw.split(',')[0].trim().toLowerCase();
+      const destCity = destRaw.split(',')[0].trim().toLowerCase();
+      return `${originCity}-${destCity}`;
+    }
 
-  function showModal(title, htmlContent) {
-    modalTitle.innerText = title;
-    modalContent.innerHTML = htmlContent;
-    modal.style.display = 'flex';
-  }
-  closeModal.onclick = () => modal.style.display = 'none';
-  window.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+    // also reverse key to show similar if user reverse search
+    function getReverseKey(originRaw, destRaw) {
+      const originCity = originRaw.split(',')[0].trim().toLowerCase();
+      const destCity = destRaw.split(',')[0].trim().toLowerCase();
+      return `${destCity}-${originCity}`;
+    }
 
-  // content data
-  const aboutText = `<p><strong>SkySwift Trips</strong> is a modern travel platform dedicated to making flight booking affordable and effortless. Founded by travel enthusiasts, we partner with 600+ airlines to deliver cheap flights, last-minute deals, and 24/7 expert support. Our mission: help you explore the world without breaking the bank.</p><br/><p>Based in the USA, we’ve served thousands of happy travelers since 2020. Whether business or leisure, we guarantee best price and secure payments.</p>`;
-  const contactText = `<p><i class="fas fa-phone-alt"></i> <strong>Phone:</strong> +1-888-845-0220 (24/7 support)</p><p><i class="fas fa-envelope"></i> <strong>Email:</strong> support@skyswiftrips.com</p><p><i class="fas fa-map-marker-alt"></i> <strong>Office:</strong> 123 Travel Blvd, Suite 400, New York, NY 10001</p><br/><p>Our travel experts are here to assist with bookings, changes, and exclusive deals.</p>`;
-  const termsText = `<p><strong>Terms of Service</strong></p><p>By using SkySwift Trips, you agree to our booking terms. Flight prices are subject to availability and change. All bookings are non-transferable unless specified. Cancellation policies vary by airline. We act as an authorized travel agency providing best price guarantee. For any dispute, applicable laws of New York State apply.</p><br/><p>Full terms provided upon booking confirmation. Contact support for detailed inquiries.</p>`;
-  const privacyText = `<p><strong>Privacy Policy</strong></p><p>We value your privacy. SkySwift Trips collects personal data (name, contact, payment info) only to process flight bookings and improve services. We never sell your data to third parties. Secure encryption (SSL) protects all transactions. You may request data deletion anytime.</p><br/><p>Cookies help personalize flight deals. By using our site, you consent to our privacy practices.</p>`;
+    function displayDemoResults(origin, destination, passengersCount) {
+      const cleanOrigin = origin.trim();
+      const cleanDest = destination.trim();
+      const key = getLookupKey(cleanOrigin, cleanDest);
+      let flightData = flightDatabase[key] || null;
+      let isReverse = false;
 
-  function bindFooterLinks() {
-    const ids = ['aboutLink', 'aboutLink2', 'contactLink', 'contactLink2', 'termsLink', 'termsLink2', 'privacyLink', 'privacyLink2'];
-    ids.forEach(id => {
-      const el = document.getElementById(id);
-      if(el) {
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          if(id.includes('about')) showModal('About SkySwift Trips', aboutText);
-          else if(id.includes('contact')) showModal('Contact Us', contactText);
-          else if(id.includes('terms')) showModal('Terms of Service', termsText);
-          else if(id.includes('privacy')) showModal('Privacy Policy', privacyText);
-        });
+      if (!flightData) {
+        const reverseKey = getReverseKey(cleanOrigin, cleanDest);
+        if (flightDatabase[reverseKey]) {
+          flightData = flightDatabase[reverseKey];
+          isReverse = true;
+        }
       }
+
+      if (flightData) {
+        let routeText = isReverse ? `${cleanDest} ✈️ ${cleanOrigin}` : `${cleanOrigin} ✈️ ${cleanDest}`;
+        const passengerNote = passengersCount && passengersCount !== "1 Adult" ? ` (${passengersCount})` : '';
+        resultsListDiv.innerHTML = `
+          <div class="flight-result-item">
+            <div><strong>${routeText}</strong><br/>${flightData.airline} • ${flightData.duration} • ${flightData.stops}</div>
+            <div><span class="flight-price">${flightData.currency}${flightData.price}</span> <span style="font-size:0.8rem;">per person</span>${passengerNote}</div>
+            <div><span class="book-hint">📞 Call to book: +1-505-633-1090</span></div>
+          </div>
+          <div style="margin-top:12px; font-size:0.85rem; background:#eaf4ff; border-radius: 24px; padding: 8px 12px;">
+            💡 This unpublished fare is not visible on any booking site. Call now to lock rate.
+          </div>
+        `;
+      } else {
+        // if no exact match, still show sample nearest deals / similar offers
+        resultsListDiv.innerHTML = `
+          <div class="flight-result-item" style="flex-direction:column; align-items:flex-start; gap:8px;">
+            <div>🌟 Special unpublished rates for ${cleanOrigin} → ${cleanDest} are available.</div>
+            <div>Our agents search 500+ airlines to find you the lowest price. Call now for an instant quote.</div>
+            <div style="margin-top:8px;"><span class="book-hint">✈️ Example nearby deals: New York→Miami $119, Chicago→Cancun $249</span></div>
+          </div>
+          <div style="margin-top:12px; background:#fff2e5; border-radius:20px; padding: 10px;">
+            🎧 Speak to an expert: <strong>+1-505-633-1090</strong> — free quote, no obligation.
+          </div>
+        `;
+      }
+      resultsPanel.classList.add('active');
+      // smooth scroll to results
+      resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const originInput = document.getElementById('origin').value;
+      const destInput = document.getElementById('destination').value;
+      let passengersSelect = document.getElementById('passengers').value;
+      
+      if (!originInput.trim() || !destInput.trim()) {
+        alert('Please enter both origin and destination cities');
+        return;
+      }
+      
+      displayDemoResults(originInput, destInput, passengersSelect);
     });
-  }
-  bindFooterLinks();
-  // also ensure any dynamically added? just safe
-</script>
+
+    // if you want to trigger initial demo on page load? optionally show default search for "New York → Miami"
+    window.addEventListener('DOMContentLoaded', () => {
+      // pre-fill with a sample result for better UX (like reference site's deals)
+      const defaultOrigin = document.getElementById('origin').value;
+      const defaultDest = document.getElementById('destination').value;
+      const defaultPax = document.getElementById('passengers').value;
+      displayDemoResults(defaultOrigin, defaultDest, defaultPax);
+    });
+  </script>
 </body>
 </html>
